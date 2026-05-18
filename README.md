@@ -54,17 +54,6 @@ So far v1 has only been validated on the **Beetle Saturn** core in RetroArch. It
 
 The small "Mega Man 8" logo on the weapon-get screen shows minor color anomalies and one missing sprite piece on every boss. It self-corrects on the next stage-select → in-stage transition. Tracked for a future v1.x release.
 
-## Files included
-
-| File | What it is |
-|------|------------|
-| `Mega Man 8 (Undub v1).xdelta` | The patch. Apply against your USA Track 1 bin. |
-| `Mega Man 8 (Undub v1).cue` | Pre-made cue sheet referencing the patched bin filenames. |
-| `splice_film_audio_only.py` | Python source of the `ROCK8_0` audio splice. Usage: `python3 splice_film_audio_only.py <US.cpk> <JP.cpk> <OUT.cpk> <audio_shift>`. For ROCK8_0 use shift `3`. |
-| `MANIFEST.md` | Exact list of files this patch substitutes, plus reproduce-from-scratch instructions. |
-| `LICENSE` | The Unlicense — public-domain dedication. |
-| `README.md` | This document. |
-
 ## Legal
 
 This release contains no game data, code, or assets. The xdelta patch is a pure binary diff that requires a user-supplied USA disc image to produce any usable output.
