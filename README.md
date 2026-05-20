@@ -36,8 +36,6 @@ xdelta3 -d -B 536870912 \
 
 That produces `Mega Man 8 (Undub v1.0.1) (Track 1).bin`. For Track 2, copy your unmodified USA Track 2 alongside it and rename it `Mega Man 8 (Undub v1.0.1) (Track 2).bin` — the audio track is byte-identical to the USA release, so the patch doesn't need to modify it.
 
-Use the included `Mega Man 8 (Undub v1.0.1).cue` (it already references those filenames) and load the cue/bin pair in your Saturn emulator (Mednafen, SSF, Yabause, Kronos, …) or burn to a Mode 1 disc for real hardware.
-
 ---
 
 ## What was patched
