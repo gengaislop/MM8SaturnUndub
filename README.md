@@ -50,10 +50,6 @@ Use the included `Mega Man 8 (Undub v1).cue` (it already references those filena
 
 So far v1 has only been validated on the **Beetle Saturn** core in RetroArch. It has *not* yet been tested on real hardware, nor on standalone emulators like SSF, Mednafen, Yabause, or Kronos. Behavior on real Saturn consoles or other emulators is unverified — reports welcome.
 
-## Known issue
-
-The small "Mega Man 8" logo on the weapon-get screen shows minor color anomalies and one missing sprite piece on every boss. It self-corrects on the next stage-select → in-stage transition. Tracked for a future v1.x release.
-
 ## Legal
 
 This release contains no game data, code, or assets. The xdelta patch is a pure binary diff that requires a user-supplied USA disc image to produce any usable output.
