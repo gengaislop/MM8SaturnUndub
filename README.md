@@ -19,7 +19,7 @@ Your USA disc dump must match these checksums (Redump-indexed dump of "Mega Man 
 
 Track 1 must be in **MODE1/2352** format. If your dump's checksums don't match, the patch will not apply.
 
-You also need `xdelta3` installed (Linux: `apt install xdelta3` / `dnf install xdelta`; macOS: `brew install xdelta`; Windows: prebuilt binary at <https://xdelta.org/>).
+You also need `xdelta3` installed (Linux: `apt install xdelta3` / `dnf install xdelta`; macOS: `brew install xdelta`; Windows: prebuilt binary at <https://www.romhacking.net/utilities/704/>).
 
 ---
 
