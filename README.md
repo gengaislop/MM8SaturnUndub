@@ -8,7 +8,7 @@ This project is open source. See `MANIFEST.md` for the exact list of files subst
 
 ## Credits
 
-- **Subtitle translations: [Hondoori](https://hondoori.wordpress.com/).** Hondoori graciously provided the English translations for every line of dialogue in the four FMVs.
+- **FMV translations: [Hondoori](https://hondoori.wordpress.com/).** Hondoori graciously provided the English translations for every line of dialogue in the four FMVs.
 - **TrekkiesUnite118** for the [SegaSaturnFilmTools / FILM Muxer](https://github.com/TrekkiesUnite118/SegaSaturnFilmMuxer) — the only working tool for muxing Cinepak video into Saturn-compliant FILM containers with correct STAB chunks.
 - **The Radius Cinepak codec** (now hosted on the [Internet Archive](https://archive.org/details/cinepakcodec1.10.0.11_20231027)) — the 1995 Windows codec is the only one that produces Saturn-compatible Cinepak encoding.
 
