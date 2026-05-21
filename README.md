@@ -1,14 +1,10 @@
-# MM8 Saturn Undub — v1.1.0
+# MM8 Saturn Undub
 
 A fan-made undub patch that swaps the English dub in *Mega Man 8* (Sega Saturn, USA release) with the original Japanese audio from *Rockman 8: Metal Heroes*, and adds **English subtitles** to the four full-motion cinematics. The English menu text, graphics, and title logo are preserved from the USA release.
 
 Distributed as an **xdelta3 binary diff**. No game data is included — you supply your own legitimately-acquired copy of the USA disc image and apply the patch yourself.
 
 This project is open source. See `MANIFEST.md` for the exact list of files substituted and a step-by-step description of how the patch is built, and `splice_film_audio_only.py` for the source of the opening-cinematic audio splice. Released under [The Unlicense](LICENSE) — public domain, do anything with it.
-
-## What's new in v1.1.0
-
-- **English subtitles on all 4 FMV cinematics** (`ROCK8_1` through `ROCK8_4`) — burned into the Cinepak video stream so they're part of the picture, not an overlay. Arial Bold 18-pt with 2-pixel outline, libass-rendered. JP audio is byte-identical to source — no quality loss vs the v1.0.x plain-JP cutscenes.
 
 ## Credits
 
