@@ -1,6 +1,6 @@
-# Patch Manifest — v1.0.1
+# Patch Manifest — v1.1.0
 
-This file documents *exactly* which game data the v1.0.1 undub patch substitutes, so the patch can be independently reviewed, reproduced, and verified.
+This file documents *exactly* which game data the v1.1.0 undub patch substitutes, so the patch can be independently reviewed, reproduced, and verified.
 
 The patch does not include any of Capcom's data itself. Reproducing the build requires that you legitimately own a dump of both the USA and the JP discs, extract their data layers (ISO 9660 file trees), perform the substitutions listed below, and re-pack to a Mode 1 / 2352 BIN.
 
@@ -12,7 +12,7 @@ The patch does not include any of Capcom's data itself. Reproducing the build re
 
 ### Full file swaps (USA disc file ← JP disc file)
 
-All **50** of these are byte-for-byte copies of the JP disc's same-named file, overwriting the USA disc's version:
+All **46** of these are byte-for-byte copies of the JP disc's same-named file, overwriting the USA disc's version:
 
 ```
 ASCII.DOT
@@ -33,7 +33,6 @@ CUT1.PAC    CUT2.PAC
 DUO00.PAC   DUO01.PAC
 FORTE1.PAC  FORTE2.PAC
 LABO_.PAC
-ROCK8_1.CPK ROCK8_2.CPK ROCK8_3.CPK ROCK8_4.CPK
 ST00A.PAC   ST00C.PAC
 ST01A.PAC
 ST03A.PAC
@@ -46,9 +45,11 @@ WILY1.PAC   WILY2B.PAC  WILY3B.PAC
 WOOD1.PAC   WOOD2.PAC
 ```
 
-### Surgical splice
+### Surgical FMV transformations
 
 - **`ROCK8_0.CPK`** (opening cinematic): not a full swap. The USA file is parsed as a Sega FILM/Cinepak container, and the FILM's audio samples (and only the audio samples) are replaced by those from the JP version, with a 3-slot audio offset to compensate for the silence intro on the USA reel. The result keeps USA visuals byte-for-byte and adds JP voice. The exact algorithm is in the included `splice_film_audio_only.py`.
+
+- **`ROCK8_1.CPK`, `ROCK8_2.CPK`, `ROCK8_3.CPK`, `ROCK8_4.CPK`** (in-game cinematics): built fresh from the JP source video with **English subtitles burned into the Cinepak frames**. The translation text is © [Hondoori](https://hondoori.wordpress.com/), provided in ASS format. The audio is byte-identical to the JP source — re-spliced after the video re-encode so no audio quality is lost. See the "FMV subtitle pipeline" section below for the full reproduction procedure.
 
 ### USA files explicitly kept (not swapped)
 
@@ -61,24 +62,43 @@ STAGE00.PAC                        (in-game dialogue text pointer tables)
 GETDEMO.PAC                        (weapon-get screen UI/animation data)
 WARNING1.BG   WARNING2.BG          (boot warnings)
 WARNING3.BG   WARNING4.BG
+GETDEMO.PAC                        (weapon-get screen — fixed in v1.0.1, kept US to fix small logo glitch)
 All BG / map / palette files not listed in the swap set above.
 ```
 
-### What changed from v1.0.0 → v1.0.1
+## FMV subtitle pipeline
 
-In v1.0.0, `GETDEMO.PAC` was incorrectly swapped to the JP version along with the other voice-carrying files. This caused the small "Mega Man 8" logo on the weapon-get screen to render with wrong palette colors and a missing sprite part. v1.0.1 keeps `GETDEMO.PAC` as the USA version. The boss voice line on the weapon-get screen comes from the `CLR0N.PAC` files (still JP), so this change only affects the screen's UI/animation data, not any voice.
+For each `ROCK8_N.CPK` (N = 1, 2, 3, 4):
+
+1. Render uncompressed AVI with subtitles burned in via ffmpeg + libass:
+   `ffmpeg -i jp_cpk/ROCK8_N.CPK -vf "subtitles=jp_ass/ROCK8_N.ass:force_style='FontName=Arial,Bold=1,FontSize=18,Outline=2'" -c:v rawvideo -pix_fmt bgr24 -r 15 -c:a pcm_s16le -ar 22050 -ac 1 ROCK8_N_subtitled.avi`
+
+2. Apply Cinepak compression in **VirtualDub2** (32-bit) running on Windows with the **1995 Radius `iccvid.dll`** codec installed. Settings: Cinepak Codec by Radius, Quality 100, target data rate 200 KB/s, force keyframes every 8 frames, audio direct stream copy, video full processing mode. Output as new AVI.
+
+3. Remux AVI → MOV with ffmpeg (no re-encode):
+   `ffmpeg -i ROCK8_N_cinepak.avi -c copy -movflags +faststart -f mov ROCK8_N_cinepak.mov`
+
+4. Convert MOV → Saturn FILM via `MovieToSaturn` from TrekkiesUnite118's [SegaSaturnFilmTools](https://github.com/TrekkiesUnite118/SegaSaturnFilmMuxer) 3.0.1, with byte-identical audio swap from the original JP CPK:
+   `java -cp SegaSaturnFilmTools.jar MakeFilm ROCK8_N_cinepak.mov jp_ROCK8_N.CPK ROCK8_N_final.CPK`
+
+5. Normalize the FILM header to JP-Saturn-compatible timing: version `1.06`, framerate `30`, video frame duration `2`, timestamp increment `2` per frame.
+
+6. Patch the FDSC chunk (audio format declaration) byte-identical to the JP source's, so the audio chunks we spliced in are correctly described to the decoder.
+
+7. Pad to JP-original byte size with trailing zeros so subsequent files on the disc don't shift LBA.
+
+The technical reason this exact pipeline is required (not simpler ones): MM8's Saturn decoder rejects FFmpeg-generated Cinepak. The Windows-side VirtualDub2 + Radius codec is the only encoder that produces byte sequences MM8 will accept, and FILM Tools is the only muxer that writes a STAB chunk MM8 will accept. See the project's reference documentation for the full investigation log if interested.
 
 ## Reproducing the patch from scratch
-
-The high-level build process:
 
 1. Extract the ISO 9660 file system from both `Mega Man 8 (USA) (Track 1).bin` and `Rockman 8 - Metal Heroes (Japan) (Track 1).bin` (each is MODE1/2352; strip the 16-byte sync header and 288-byte ECC trailer from every sector to get the 2048-byte payload).
 2. Start from the USA file tree.
 3. Overwrite each file listed under **Full file swaps** with the same-named file from the JP tree.
 4. Run `splice_film_audio_only.py us_ROCK8_0.CPK jp_ROCK8_0.CPK ROCK8_0.CPK 3` and place the result at `ROCK8_0.CPK`.
-5. Re-pack as ISO 9660 (`genisoimage -no-pad -iso-level 1 -sysid "SEGA SEGASATURN" -V MEGA_MAN_8`), splice the original USA IP.BIN (first 32 KB) back over the head of the ISO, then re-encode as MODE1/2352 with proper EDC/ECC bytes per sector.
-6. Diff the result against the original USA Track 1 with `xdelta3 -e -9 -B 536870912` to produce the distributable patch.
+5. For each `ROCK8_N.CPK` (N = 1, 2, 3, 4), run the **FMV subtitle pipeline** above using the appropriate `jp_ass/ROCK8_N.ass` translation file.
+6. Re-pack as ISO 9660 (`genisoimage -no-pad -iso-level 1 -sysid "SEGA SEGASATURN" -V MEGA_MAN_8`), splice the original USA IP.BIN (first 32 KB) back over the head of the ISO, then re-encode as MODE1/2352 with proper EDC/ECC bytes per sector.
+7. Diff the result against the original USA Track 1 with `xdelta3 -e -9 -B 536870912` to produce the distributable patch.
 
 ## Verification
 
-Anyone who applies the patch can re-extract the resulting `.bin`'s ISO contents and confirm that the files listed above match the JP disc bytes (full swaps), that `ROCK8_0.CPK` matches the splice tool's deterministic output, and that every other byte of the data layer matches the USA disc.
+Anyone who applies the patch can re-extract the resulting `.bin`'s ISO contents and confirm that the files listed above match the JP disc bytes (full swaps), that `ROCK8_0.CPK` matches the splice tool's deterministic output, that `ROCK8_1`–`ROCK8_4` decode to videos with the documented Arial Bold 18 / 2-px outline subtitles overlaid (using the provided ASS files), and that every other byte of the data layer matches the USA disc.
