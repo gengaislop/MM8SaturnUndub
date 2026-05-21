@@ -24,7 +24,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,0:01:37.37,0:01:38.29,Default,Bass,0,0,0,,Mega Man!
 Dialogue: 0,0:01:38.33,0:01:39.73,Default,Bass,0,0,0,,Today’s the day we finish this!
 Dialogue: 0,0:01:40.03,0:01:42.03,Default,Mega Man,0,0,0,,Bass, stop!
-Dialogue: 0,0:01:42.03,0:01:44.14,Default,,0,0,0,,I don’t want to fight you!
+Dialogue: 0,0:01:42.03,0:01:44.14,Default,Mega Man,0,0,0,,I don’t want to fight you!
 Dialogue: 0,0:01:44.20,0:01:44.93,Default,Bass,0,0,0,,Shut up!
 Dialogue: 0,0:01:50.50,0:01:51.49,Default,Roll,0,0,0,,Mega Man!
 Dialogue: 0,0:01:51.53,0:01:52.46,Default,Mega Man,0,0,0,,Roll!
