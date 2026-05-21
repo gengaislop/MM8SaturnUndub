@@ -6,6 +6,15 @@ Distributed as an **xdelta3 binary diff**. No game data is included — you supp
 
 This project is open source. See `MANIFEST.md` for the exact list of files substituted and a step-by-step description of how the patch is built, and `splice_film_audio_only.py` for the source of the opening-cinematic audio splice. Released under [The Unlicense](LICENSE) — public domain, do anything with it.
 
+## Screenshots
+
+| | |
+|:-:|:-:|
+| ![Title screen — English logo preserved](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_1.png>) | ![Subtitled FMV cinematic](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_3.png>) |
+| *Title screen — English logo preserved* | *Subtitled FMV cinematic* |
+| ![Bonus Mode menu — English UI preserved](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_2.png>) | ![In-game dialogue — English text preserved](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_4.png>) |
+| *Bonus Mode menu — English UI preserved* | *In-game dialogue — English text preserved* |
+
 ## Credits
 
 - **FMV translations: [Hondoori](https://hondoori.wordpress.com/).** Hondoori graciously provided the English translations for every line of dialogue in the four FMVs.
