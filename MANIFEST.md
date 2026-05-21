@@ -49,7 +49,7 @@ WOOD1.PAC   WOOD2.PAC
 
 - **`ROCK8_0.CPK`** (opening cinematic): not a full swap. The USA file is parsed as a Sega FILM/Cinepak container, and the FILM's audio samples (and only the audio samples) are replaced by those from the JP version, with a 3-slot audio offset to compensate for the silence intro on the USA reel. The result keeps USA visuals byte-for-byte and adds JP voice. The exact algorithm is in the included `splice_film_audio_only.py`.
 
-- **`ROCK8_1.CPK`, `ROCK8_2.CPK`, `ROCK8_3.CPK`, `ROCK8_4.CPK`** (in-game cinematics): built fresh from the JP source video with **English subtitles burned into the Cinepak frames**. The translation text is © [Hondoori](https://hondoori.wordpress.com/), provided in ASS format. The audio is byte-identical to the JP source — re-spliced after the video re-encode so no audio quality is lost. See the "FMV subtitle pipeline" section below for the full reproduction procedure.
+- **`ROCK8_1.CPK`, `ROCK8_2.CPK`, `ROCK8_3.CPK`, `ROCK8_4.CPK`** (in-game cinematics): built fresh from the JP source video with **English subtitles burned into the Cinepak frames**. The translation text is from [Hondoori](https://hondoori.wordpress.com/), provided in ASS format. The audio is byte-identical to the JP source — re-spliced after the video re-encode so no audio quality is lost. See the "FMV subtitle pipeline" section below for the full reproduction procedure.
 
 ### USA files explicitly kept (not swapped)
 
