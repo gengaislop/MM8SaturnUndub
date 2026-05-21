@@ -9,11 +9,9 @@ This project is open source. See `MANIFEST.md` for the exact list of files subst
 ## Screenshots
 
 | | |
-|:-:|:-:|
-| ![Title screen — English logo preserved](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_1.png>) | ![Subtitled FMV cinematic](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_3.png>) |
-| *Title screen — English logo preserved* | *Subtitled FMV cinematic* |
-| ![Bonus Mode menu — English UI preserved](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_2.png>) | ![In-game dialogue — English text preserved](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_4.png>) |
-| *Bonus Mode menu — English UI preserved* | *In-game dialogue — English text preserved* |
+  |:-:|:-:|
+  | ![](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_1.png>) | ![](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_2.png>) |
+  | ![](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_3.png>) | ![](<screenshots/Mega_Man_8_(USA)_[Undub_v1.1.0]_4.png>) |
 
 ## Credits
 
