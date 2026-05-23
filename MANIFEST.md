@@ -71,7 +71,7 @@ All BG / map / palette files not listed in the swap set above.
 For each `ROCK8_N.CPK` (N = 1, 2, 3, 4):
 
 1. Render uncompressed AVI with subtitles burned in via ffmpeg + libass:
-   `ffmpeg -i jp_cpk/ROCK8_N.CPK -vf "subtitles=jp_ass/ROCK8_N.ass:force_style='FontName=Arial,Bold=1,FontSize=18,Outline=2'" -c:v rawvideo -pix_fmt bgr24 -r 15 -c:a pcm_s16le -ar 22050 -ac 1 ROCK8_N_subtitled.avi`
+   `ffmpeg -i jp_cpk/ROCK8_N.CPK -vf "subtitles=ROCK8_N.ass:force_style='FontName=Arial,Bold=1,FontSize=18,Outline=2'" -c:v rawvideo -pix_fmt bgr24 -r 15 -c:a pcm_s16le -ar 22050 -ac 1 ROCK8_N_subtitled.avi`
 
 2. Apply Cinepak compression in **VirtualDub2** (32-bit) running on Windows with the **1995 Radius `iccvid.dll`** codec installed. Settings: Cinepak Codec by Radius, Quality 100, target data rate 200 KB/s, force keyframes every 8 frames, audio direct stream copy, video full processing mode. Output as new AVI.
 
@@ -95,7 +95,7 @@ The technical reason this exact pipeline is required (not simpler ones): MM8's S
 2. Start from the USA file tree.
 3. Overwrite each file listed under **Full file swaps** with the same-named file from the JP tree.
 4. Run `splice_film_audio_only.py us_ROCK8_0.CPK jp_ROCK8_0.CPK ROCK8_0.CPK 3` and place the result at `ROCK8_0.CPK`.
-5. For each `ROCK8_N.CPK` (N = 1, 2, 3, 4), run the **FMV subtitle pipeline** above using the appropriate `jp_ass/ROCK8_N.ass` translation file.
+5. For each `ROCK8_N.CPK` (N = 1, 2, 3, 4), run the **FMV subtitle pipeline** above using the appropriate subtitles.
 6. Re-pack as ISO 9660 (`genisoimage -no-pad -iso-level 1 -sysid "SEGA SEGASATURN" -V MEGA_MAN_8`), splice the original USA IP.BIN (first 32 KB) back over the head of the ISO, then re-encode as MODE1/2352 with proper EDC/ECC bytes per sector.
 7. Diff the result against the original USA Track 1 with `xdelta3 -e -9 -B 536870912` to produce the distributable patch.
 
