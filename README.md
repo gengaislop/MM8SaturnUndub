@@ -75,8 +75,14 @@ Use the included `Mega Man 8 (USA) [Undub v1.1.0].cue` (it already references th
 
 ## Tested on
 
-v1.1.0 has been validated on the **Saturn** core for MiSTer FPGA, **Beetle Saturn** core in RetroArch and on **standalone Mednafen** (Saturn module). It has *not* yet been tested on real hardware, nor on SSF / Yabause / Kronos for the full play-through. Behavior on real Saturn consoles or other emulators is unverified — reports welcome.
+### Emulators
+v1.1.0 has been validated on the **Saturn** core for MiSTer FPGA, **Beetle Saturn** core in RetroArch and on **standalone Mednafen** (Saturn module). It has *not* yet been tested on real hardware, nor on SSF / Yabause / Kronos for the full play-through. Behavior on other emulators is unverified — reports welcome.
 
+### Real Hardware
+Sega Saturn VA0 + Fenrir ODE: Version 1.1.0 reported to work through a full playthrough, with no noticeable issues. [Source
+](https://github.com/gengaislop/MM8SaturnUndub/issues/1#issue-5467743688)
+
+Reports are welcome for real hardware.
 
 ## Legal
 
