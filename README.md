@@ -21,12 +21,6 @@ This project is open source. See `MANIFEST.md` for the exact list of files subst
 
 ---
 
-## What's new in v1.2.0
-
-- **Ending credits now play the Japanese song "Brand New Way".** The USA release replaced it with a different credits track. The game plays its credits music from the disc's CD audio, so v1.2.0 now patches **Track 2** as well as Track 1. Track 1 is unchanged from v1.1.0.
-
----
-
 ## Required source files
 
 Your USA disc dump must match these checksums (Redump-indexed dump of "Mega Man 8 (USA)"):
