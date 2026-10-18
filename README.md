@@ -1,6 +1,6 @@
 # MM8 Saturn Undub
 
-A fan-made undub patch that swaps the English dub in *Mega Man 8* (Sega Saturn, USA release) with the original Japanese audio from *Rockman 8: Metal Heroes*, adds **English subtitles** to the four full-motion cinematics, and restores the Japanese ending-credits song **"Brand New Way"**. The English menu text, graphics, and title logo are preserved from the USA release.
+A fan-made undub patch that swaps the English dub in *Mega Man 8* (Sega Saturn, USA release) with the original Japanese audio from *Rockman 8: Metal Heroes*.
 
 Distributed as an **xdelta3 binary diff**. No game data is included — you supply your own legitimately-acquired copy of the USA disc image and apply the patch yourself.
 
