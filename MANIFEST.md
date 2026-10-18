@@ -1,12 +1,12 @@
-# Patch Manifest — v1.1.0
+# Patch Manifest — v1.2.0
 
-This file documents *exactly* which game data the v1.1.0 undub patch substitutes, so the patch can be independently reviewed, reproduced, and verified.
+This file documents *exactly* which game data the v1.2.0 undub patch substitutes, so the patch can be independently reviewed, reproduced, and verified.
 
 The patch does not include any of Capcom's data itself. Reproducing the build requires that you legitimately own a dump of both the USA and the JP discs, extract their data layers (ISO 9660 file trees), perform the substitutions listed below, and re-pack to a Mode 1 / 2352 BIN.
 
 ## Base disc
 
-- USA disc (`Mega Man 8 (USA)`, Redump-matched) — provides the executable, all graphics, all text, the title-screen logo, all UI/menu data, and the original Track 2 redbook audio.
+- USA disc (`Mega Man 8 (USA)`, Redump-matched) — provides the executable, all graphics, all text, the title-screen logo, and all UI/menu data. Track 2 (CD audio) is replaced — see **CD audio (Track 2)** below.
 
 ## Substitutions
 
@@ -50,6 +50,17 @@ WOOD1.PAC   WOOD2.PAC
 - **`ROCK8_0.CPK`** (opening cinematic): not a full swap. The USA file is parsed as a Sega FILM/Cinepak container, and the FILM's audio samples (and only the audio samples) are replaced by those from the JP version, with a 3-slot audio offset to compensate for the silence intro on the USA reel. The result keeps USA visuals byte-for-byte and adds JP voice. The exact algorithm is in the included `splice_film_audio_only.py`.
 
 - **`ROCK8_1.CPK`, `ROCK8_2.CPK`, `ROCK8_3.CPK`, `ROCK8_4.CPK`** (in-game cinematics): built fresh from the JP source video with **English subtitles burned into the Cinepak frames**. The translation text is from [Hondoori](https://hondoori.wordpress.com/), provided in ASS format. The audio is byte-identical to the JP source — re-spliced after the video re-encode so no audio quality is lost. See the "FMV subtitle pipeline" section below for the full reproduction procedure.
+
+### CD audio (Track 2) — ending credits song
+
+The game's only CD audio is the ending-credits music. `1STREAD.PRG` contains a small CD-DA cue table (one used entry) giving the start and end track to play:
+
+| Disc | Start track | End track | Length |
+|------|-------------|-----------|--------|
+| USA | 2 | 2 | 4:26 (USA has 2 tracks) |
+| JP | 2 | **3** | 1:52 + 2:21 (JP has 3 tracks) |
+
+The JP game plays tracks 2 and 3 back-to-back as one continuous piece ("Brand New Way"), including Track 3's 2-second silent pregap. The undub's Track 2 is therefore the JP disc's Track 2 and Track 3 `.bin` files **concatenated byte-for-byte**. The USA executable plays "all of Track 2", so it plays the full JP piece exactly as the JP game does. No executable patch is needed, and the cue sheet keeps the USA 2-track layout.
 
 ### USA files explicitly kept (not swapped)
 
@@ -97,8 +108,11 @@ The technical reason this exact pipeline is required (not simpler ones): MM8's S
 4. Run `splice_film_audio_only.py us_ROCK8_0.CPK jp_ROCK8_0.CPK ROCK8_0.CPK 3` and place the result at `ROCK8_0.CPK`.
 5. For each `ROCK8_N.CPK` (N = 1, 2, 3, 4), run the **FMV subtitle pipeline** above using the appropriate subtitles.
 6. Re-pack as ISO 9660 (`genisoimage -no-pad -iso-level 1 -sysid "SEGA SEGASATURN" -V MEGA_MAN_8`), splice the original USA IP.BIN (first 32 KB) back over the head of the ISO, then re-encode as MODE1/2352 with proper EDC/ECC bytes per sector.
-7. Diff the result against the original USA Track 1 with `xdelta3 -e -9 -B 536870912` to produce the distributable patch.
+7. Diff the result against the original USA Track 1 with `xdelta3 -e -9 -B 536870912` to produce the Track 1 patch.
+8. Build Track 2 by concatenating the JP CD audio tracks:
+   `cat "Rockman 8 - Metal Heroes (Japan) (Track 2).bin" "Rockman 8 - Metal Heroes (Japan) (Track 3).bin" > "Track 2.bin"`
+   then diff it against the original USA Track 2 with `xdelta3 -e -9 -B 536870912` to produce the Track 2 patch.
 
 ## Verification
 
-Anyone who applies the patch can re-extract the resulting `.bin`'s ISO contents and confirm that the files listed above match the JP disc bytes (full swaps), that `ROCK8_0.CPK` matches the splice tool's deterministic output, that `ROCK8_1`–`ROCK8_4` decode to videos with the documented Arial Bold 18 / 2-px outline subtitles overlaid (using the provided ASS files), and that every other byte of the data layer matches the USA disc.
+Anyone who applies the patch can re-extract the resulting `.bin`'s ISO contents and confirm that the files listed above match the JP disc bytes (full swaps), that `ROCK8_0.CPK` matches the splice tool's deterministic output, that `ROCK8_1`–`ROCK8_4` decode to videos with the documented Arial Bold 18 / 2-px outline subtitles overlaid (using the provided ASS files), that every other byte of the data layer matches the USA disc, and that Track 2 is byte-identical to JP Track 2 + JP Track 3 concatenated (MD5 `814b6bddcfbebf5ee1699d7f9c3c06cc`).
